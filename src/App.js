@@ -14,26 +14,21 @@ class App extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRadioChange = this.handleRadioChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({userInput: event.target.value});
   }
 
-/*  CalcMin(props){
-      this.setState({ minutes: (this.state.userInput - seconds) / 60 });
-    }
-
-  CalcDaysMins(props){
-    this.setState({ days: Math.floor(minutes/24) });
-    alert('got this far - days: ' + {days});
-    this.setState({ minutes: minutes % 24 });
-    return days + " days " + minutes + " min ";
+  handleRadioChange(event) {
+    this.setState({selOption: event.target.value});
   }
-*/
+
   handleSubmit(e) {
     e.preventDefault();
-    const baseSeconds = Math.floor(this.state.userInput / 30); // 30km/second
+    const kps = this.state.selOption === 'light' ? 30000 : 30;
+    const baseSeconds = Math.floor(this.state.userInput / kps);
     const seconds = baseSeconds % 60;
     //const minutesTotal = ((baseSeconds - seconds) / 60);
     var minutes;
@@ -84,7 +79,13 @@ class App extends Component {
         <div>
           <h2>Meteor Calculator</h2>
           <form onSubmit={this.handleSubmit}>
-            <p>Enter the km the meteor traveled and this will return the time it takes to travel the distance. </p>
+            <p>Enter the travel the distance in km and select the item you want to calcualte for. </p>
+            <input type="radio" value="light"
+              checked={this.state.selOption === 'light'}
+              onChange={this.handleRadioChange} /> Light
+            <input type="radio" value="meteor"
+              checked={this.state.selOption === 'meteor'}
+              onChange={this.handleRadioChange} /> Meteor
             <input text="distance in km" type="number" onChange= {this.handleChange} />
             <input type="submit" value="Submit" />
             <p>The time it takes the meteor to travel is:
