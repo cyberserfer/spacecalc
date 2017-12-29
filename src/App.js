@@ -9,7 +9,9 @@ class App extends Component {
 
     this.state = {
       userInput: '55',
-      travTime: ''
+      travTime: '',
+      selOption: 'light',
+      selPicture: <img className="App-pic" alt="light" src="http://en.es-static.us/upl/2012/03/light_beam_star.jpg" />
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,6 +25,10 @@ class App extends Component {
 
   handleRadioChange(event) {
     this.setState({selOption: event.target.value});
+    const picDisplay = event.target.value === 'light' ?
+    <img className="App-pic" alt="light" src="http://en.es-static.us/upl/2012/03/light_beam_star.jpg" /> :
+    <img className="App-pic" alt="comet" src="http://i.telegraph.co.uk/multimedia/archive/03586/comet_3586013b.jpg" /> ;
+    this.setState({ selPicture: picDisplay });
   }
 
   handleSubmit(e) {
@@ -77,7 +83,7 @@ class App extends Component {
         </header>
 
         <div>
-          <h2>Meteor Calculator</h2>
+          <h2>Space Time/Distance Calculator</h2>
           <form onSubmit={this.handleSubmit}>
             <p>Enter the travel the distance in km and select the item you want to calcualte for. </p>
             <input type="radio" value="light"
@@ -86,9 +92,12 @@ class App extends Component {
             <input type="radio" value="meteor"
               checked={this.state.selOption === 'meteor'}
               onChange={this.handleRadioChange} /> Meteor
+            <br />
+            {this.state.selPicture}
+            <br />
             <input text="distance in km" type="number" onChange= {this.handleChange} />
             <input type="submit" value="Submit" />
-            <p>The time it takes the meteor to travel is:
+            <p>The time it takes the {this.state.selOption} to travel is:
               <div className="distTraveled">{this.state.travTime}</div>
             </p>
           </form>
