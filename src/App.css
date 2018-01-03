@@ -30,3 +30,16 @@
 .App-pic {
   height: 100px;
 }
+
+.CalcBox {
+  position: fixed;
+  width: 400px;
+  top: 175px;
+  left: 25px;
+}
+
+.HistBox {
+  position: fixed;
+  top: 175px;
+  left: 500px;
+}
